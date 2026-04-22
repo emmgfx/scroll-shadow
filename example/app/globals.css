@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, Consolas, monospace;
+  --color-accent: #aa3bff;
+  --color-accent-muted: rgba(170, 59, 255, 0.1);
+  --color-accent-border: rgba(170, 59, 255, 0.4);
+  --color-border: #e5e4e7;
+  --color-surface: #f4f3ec;
+  --color-heading: #08060d;
+  --color-body: #6b6375;
+}
+
+:root {
+  color-scheme: light dark;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Make bright's pre fill its container */
+[data-bright-theme] {
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: white;
+  color: #6b6375;
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-accent: #c084fc;
+    --color-accent-muted: rgba(192, 132, 252, 0.12);
+    --color-accent-border: rgba(192, 132, 252, 0.4);
+    --color-border: #2e303a;
+    --color-surface: #1f2028;
+    --color-heading: #f3f4f6;
+    --color-body: #9ca3af;
+  }
+  body {
+    background: #16171d;
+    color: #9ca3af;
+  }
+}
