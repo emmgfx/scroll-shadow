@@ -163,6 +163,8 @@ export default function Page() {
         <CodeBlock>{`import { ScrollHint } from "@emmgfx/scroll-hint";
 
 <ScrollHint>
+  {/* ScrollHint renders as a div. Give it a size via style, className,
+      or let a flex/grid parent control it — just like any block element. */}
   {/* your content */}
 </ScrollHint>`}</CodeBlock>
       </section>
@@ -202,7 +204,7 @@ export default function Page() {
         </div>
         <CodeBlock>{`<ScrollHint
   shadowColor="var(--hint-shadow)"
-  className="[--hint-shadow:rgba(0,0,0,0.15)] dark:[--hint-shadow:rgba(255,255,255,0.1)]"
+  className="[--hint-shadow:var(--color-slate-200)] dark:[--hint-shadow:var(--color-slate-800)]"
 >
   {/* content */}
 </ScrollHint>`}</CodeBlock>

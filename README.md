@@ -88,7 +88,7 @@ Define the variable inline using Tailwind's dark mode variant:
 ```jsx
 <ScrollHint
   shadowColor="var(--hint-shadow)"
-  className="[--hint-shadow:rgba(0,0,0,0.15)] dark:[--hint-shadow:rgba(255,255,255,0.1)]"
+  className="[--hint-shadow:var(--color-slate-200)] dark:[--hint-shadow:var(--color-slate-800)]"
 >
   {/* content */}
 </ScrollHint>
