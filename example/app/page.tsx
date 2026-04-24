@@ -1,3 +1,4 @@
+import { Zap, MoveHorizontal, SeparatorHorizontal, Sliders } from "lucide-react";
 import { CodeBlock } from "./components/CodeBlock";
 import { BothDemo, CustomDemo, HorizontalDemo, LineDemo, LineShadowDemo, VerticalDemo } from "./components/Demos";
 import { DemoTabs } from "./components/DemoTabs";
@@ -134,39 +135,16 @@ export default function Page() {
       {divider}
 
       {/* Features */}
-      <div className="grid grid-cols-3 max-sm:grid-cols-1">
+      <div className="grid grid-cols-2 lg:grid-cols-4">
         {[
-          {
-            icon: (
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-(--color-accent)">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-              </svg>
-            ),
-            title: "Zero scroll events",
-            description: "Uses IntersectionObserver on sentinel elements. No listeners, no polling, no jank.",
-          },
-          {
-            icon: (
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-(--color-accent)">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
-              </svg>
-            ),
-            title: "All directions",
-            description: "Vertical, horizontal, or both — one prop controls all four shadow edges.",
-          },
-          {
-            icon: (
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-(--color-accent)">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4.098 19.902a3.75 3.75 0 0 0 5.304 0l6.401-6.402M6.75 21A3.75 3.75 0 0 1 3 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 0 0 3.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008Z" />
-              </svg>
-            ),
-            title: "Fully customizable",
-            description: "Control shadow color and size. Accepts all standard div props.",
-          },
+          { icon: <Zap className="w-8 h-8 text-(--color-accent)" strokeWidth={1.5} />, title: "Zero scroll events", description: "Uses IntersectionObserver on sentinel elements. No listeners, no polling, no jank." },
+          { icon: <MoveHorizontal className="w-8 h-8 text-(--color-accent)" strokeWidth={1.5} />, title: "All directions", description: "Vertical, horizontal, or both — one prop controls all four edges." },
+          { icon: <SeparatorHorizontal className="w-8 h-8 text-(--color-accent)" strokeWidth={1.5} />, title: "Shadow or line", description: "Gradient shadow, solid line, or both — mix and match per your design." },
+          { icon: <Sliders className="w-8 h-8 text-(--color-accent)" strokeWidth={1.5} />, title: "Fully customizable", description: "Control colors and sizes. Accepts all standard div props." },
         ].map((f, i) => (
           <div
             key={i}
-            className="text-left px-8 py-7 border-r border-(--color-border) last:border-r-0 max-sm:border-r-0 max-sm:border-b max-sm:last:border-b-0 max-sm:px-6"
+            className="text-left px-8 py-7 border-(--color-border) max-lg:odd:border-r max-lg:nth-[-n+2]:border-b lg:border-r lg:last:border-r-0 max-sm:px-6"
           >
             <div className="mb-4">{f.icon}</div>
             <h3 className="text-base font-semibold text-(--color-heading) mb-2">{f.title}</h3>
