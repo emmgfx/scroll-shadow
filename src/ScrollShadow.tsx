@@ -6,12 +6,16 @@ export interface ScrollShadowProps extends React.HTMLAttributes<HTMLDivElement> 
   direction?: ScrollShadowDirection;
   shadowColor?: string;
   shadowSize?: number;
+  lineColor?: string;
+  lineSize?: number;
 }
 
 export function ScrollShadow({
   direction = "vertical",
   shadowColor = "rgba(0, 0, 0, 0.15)",
   shadowSize = 20,
+  lineColor,
+  lineSize = 1,
   children,
   style,
   ...props
@@ -56,6 +60,15 @@ export function ScrollShadow({
     return () => observer.disconnect();
   }, [direction]);
 
+  const overlay = (active: boolean, style: React.CSSProperties) => ({
+    position: "absolute" as const,
+    pointerEvents: "none" as const,
+    zIndex: 1,
+    opacity: active ? 1 : 0,
+    transition: "opacity 0.2s",
+    ...style,
+  });
+
   return (
     <div style={{ position: "relative", overflow: "hidden", ...style }} {...props}>
       <div
@@ -91,62 +104,21 @@ export function ScrollShadow({
         </div>
       </div>
 
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          height: shadowSize,
-          background: `linear-gradient(to bottom, ${shadowColor}, transparent)`,
-          pointerEvents: "none",
-          opacity: shadows.top ? 1 : 0,
-          transition: "opacity 0.2s",
-          zIndex: 1,
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: shadowSize,
-          background: `linear-gradient(to top, ${shadowColor}, transparent)`,
-          pointerEvents: "none",
-          opacity: shadows.bottom ? 1 : 0,
-          transition: "opacity 0.2s",
-          zIndex: 1,
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          left: 0,
-          top: 0,
-          bottom: 0,
-          width: shadowSize,
-          background: `linear-gradient(to right, ${shadowColor}, transparent)`,
-          pointerEvents: "none",
-          opacity: shadows.left ? 1 : 0,
-          transition: "opacity 0.2s",
-          zIndex: 1,
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          right: 0,
-          top: 0,
-          bottom: 0,
-          width: shadowSize,
-          background: `linear-gradient(to left, ${shadowColor}, transparent)`,
-          pointerEvents: "none",
-          opacity: shadows.right ? 1 : 0,
-          transition: "opacity 0.2s",
-          zIndex: 1,
-        }}
-      />
+      {/* Top */}
+      {vertical && shadowColor && <div style={overlay(shadows.top, { top: 0, left: 0, right: 0, height: shadowSize, background: `linear-gradient(to bottom, ${shadowColor}, transparent)` })} />}
+      {vertical && lineColor && <div style={overlay(shadows.top, { top: 0, left: 0, right: 0, height: lineSize, background: lineColor })} />}
+
+      {/* Bottom */}
+      {vertical && shadowColor && <div style={overlay(shadows.bottom, { bottom: 0, left: 0, right: 0, height: shadowSize, background: `linear-gradient(to top, ${shadowColor}, transparent)` })} />}
+      {vertical && lineColor && <div style={overlay(shadows.bottom, { bottom: 0, left: 0, right: 0, height: lineSize, background: lineColor })} />}
+
+      {/* Left */}
+      {horizontal && shadowColor && <div style={overlay(shadows.left, { left: 0, top: 0, bottom: 0, width: shadowSize, background: `linear-gradient(to right, ${shadowColor}, transparent)` })} />}
+      {horizontal && lineColor && <div style={overlay(shadows.left, { left: 0, top: 0, bottom: 0, width: lineSize, background: lineColor })} />}
+
+      {/* Right */}
+      {horizontal && shadowColor && <div style={overlay(shadows.right, { right: 0, top: 0, bottom: 0, width: shadowSize, background: `linear-gradient(to left, ${shadowColor}, transparent)` })} />}
+      {horizontal && lineColor && <div style={overlay(shadows.right, { right: 0, top: 0, bottom: 0, width: lineSize, background: lineColor })} />}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { CodeBlock } from "./components/CodeBlock";
-import { BothDemo, CustomDemo, HorizontalDemo, VerticalDemo } from "./components/Demos";
+import { BothDemo, CustomDemo, HorizontalDemo, LineDemo, LineShadowDemo, VerticalDemo } from "./components/Demos";
 import { DemoTabs } from "./components/DemoTabs";
 
 const divider = <div className="w-full h-px bg-(--color-border)" />;
@@ -55,10 +55,37 @@ export default function Page() {
       ),
       demo: <CustomDemo />,
     },
+    {
+      id: "line",
+      label: "Solid line",
+      prop: "lineColor",
+      description: "Show a solid line at the edge instead of a gradient shadow.",
+      code: (
+        <CodeBlock>{`<ScrollShadow shadowColor="" lineColor="oklch(0.6 0.2 270)">
+  {/* content */}
+</ScrollShadow>`}</CodeBlock>
+      ),
+      demo: <LineDemo />,
+    },
+    {
+      id: "line-shadow",
+      label: "Line + shadow",
+      prop: "lineColor + shadowColor",
+      description: "Combine a solid line with a gradient shadow for a stronger indicator.",
+      code: (
+        <CodeBlock>{`<ScrollShadow
+  lineColor="oklch(0.6 0.2 270)"
+  shadowColor="oklch(0.6 0.2 270 / 15%)"
+>
+  {/* content */}
+</ScrollShadow>`}</CodeBlock>
+      ),
+      demo: <LineShadowDemo />,
+    },
   ];
 
   return (
-    <div className="w-full max-w-[1126px] mx-auto min-[1126px]:border-x min-[1126px]:border-(--color-border) min-h-screen flex flex-col text-center">
+    <div className="w-full max-w-281.5 mx-auto min-[1126px]:border-x min-[1126px]:border-(--color-border) min-h-screen flex flex-col text-center">
 
       {/* Hero */}
       <header className="flex flex-col items-center px-10 pt-20 pb-18 gap-5 max-sm:px-6 max-sm:pt-12 max-sm:pb-12">
@@ -199,8 +226,10 @@ export default function Page() {
             <tbody>
               {[
                 { name: "direction", type: '"vertical" | "horizontal" | "both"', def: '"vertical"', desc: "Which axes to observe and show shadows on." },
-                { name: "shadowColor", type: "string", def: '"rgba(0,0,0,0.15)"', desc: "CSS color value used for the gradient shadows." },
+                { name: "shadowColor", type: "string", def: '"rgba(0,0,0,0.15)"', desc: 'CSS color for the gradient shadow. Set to "" to disable.' },
                 { name: "shadowSize", type: "number", def: "20", desc: "Height/width of the shadow overlays in pixels." },
+                { name: "lineColor", type: "string", def: "undefined", desc: "CSS color for a solid line at the edge. Omit to disable." },
+                { name: "lineSize", type: "number", def: "1", desc: "Thickness of the solid line in pixels." },
               ].map((row) => (
                 <tr key={row.name} className="border-b border-(--color-border) last:border-0">
                   <td className="py-3.5 px-4"><code className="text-[13px] font-mono text-(--color-heading)">{row.name}</code></td>
