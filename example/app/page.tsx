@@ -162,8 +162,49 @@ export default function Page() {
         </div>
         <CodeBlock>{`import { ScrollHint } from "@emmgfx/scroll-hint";
 
-<ScrollHint style={{ height: 300 }}>
+<ScrollHint>
   {/* your content */}
+</ScrollHint>`}</CodeBlock>
+      </section>
+
+      {divider}
+
+      {/* Dark mode */}
+      <section className="text-left">
+        <div className="px-10 py-8 border-b border-(--color-border) max-sm:px-6">
+          <h2 className="text-2xl font-semibold tracking-tight text-(--color-heading) mb-1">Dark mode</h2>
+          <p className="text-sm text-(--color-body)">
+            Both <code className="text-[13px] font-mono px-1.5 py-0.5 rounded bg-(--color-surface)">shadowColor</code> and <code className="text-[13px] font-mono px-1.5 py-0.5 rounded bg-(--color-surface)">lineColor</code> accept any CSS value — including variables. Define a variable per color scheme and pass it as the prop.
+          </p>
+        </div>
+        <CodeBlock>{`<style>
+  :root { --hint-shadow: rgba(0, 0, 0, 0.15); }
+  @media (prefers-color-scheme: dark) {
+    :root { --hint-shadow: rgba(255, 255, 255, 0.1); }
+  }
+</style>
+
+<ScrollHint shadowColor="var(--hint-shadow)">
+  {/* lineColor works the same way */}
+  {/* content */}
+</ScrollHint>`}</CodeBlock>
+      </section>
+
+      {divider}
+
+      {/* Tailwind CSS */}
+      <section className="text-left">
+        <div className="px-10 py-8 border-b border-(--color-border) max-sm:px-6">
+          <h2 className="text-2xl font-semibold tracking-tight text-(--color-heading) mb-1">Tailwind CSS</h2>
+          <p className="text-sm text-(--color-body)">
+            Use Tailwind's <code className="text-[13px] font-mono px-1.5 py-0.5 rounded bg-(--color-surface)">dark:</code> variant to define the variable inline — no extra stylesheet needed.
+          </p>
+        </div>
+        <CodeBlock>{`<ScrollHint
+  shadowColor="var(--hint-shadow)"
+  className="[--hint-shadow:rgba(0,0,0,0.15)] dark:[--hint-shadow:rgba(255,255,255,0.1)]"
+>
+  {/* content */}
 </ScrollHint>`}</CodeBlock>
       </section>
 

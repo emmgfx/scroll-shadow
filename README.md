@@ -13,7 +13,7 @@ npm install @emmgfx/scroll-hint
 ```jsx
 import { ScrollHint } from "@emmgfx/scroll-hint";
 
-<ScrollHint style={{ height: 300 }}>
+<ScrollHint>
   {/* your scrollable content */}
 </ScrollHint>
 ```
@@ -58,6 +58,38 @@ All standard `div` props are forwarded to the outer wrapper element.
 **Line + shadow combined:**
 ```jsx
 <ScrollHint lineColor="rgba(0,0,0,0.1)">
+  {/* content */}
+</ScrollHint>
+```
+
+## Dark mode
+
+`shadowColor` and `lineColor` accept any CSS value, including variables. Define a variable in your stylesheet and update it per color scheme:
+
+```css
+:root { --hint-shadow: rgba(0, 0, 0, 0.15); }
+@media (prefers-color-scheme: dark) {
+  :root { --hint-shadow: rgba(255, 255, 255, 0.1); }
+}
+```
+
+```jsx
+<ScrollHint shadowColor="var(--hint-shadow)">
+  {/* content */}
+</ScrollHint>
+```
+
+Works with any dark mode strategy — media query, class-based (`class="dark"`), or data attributes.
+
+## Tailwind CSS
+
+Define the variable inline using Tailwind's dark mode variant:
+
+```jsx
+<ScrollHint
+  shadowColor="var(--hint-shadow)"
+  className="[--hint-shadow:rgba(0,0,0,0.15)] dark:[--hint-shadow:rgba(255,255,255,0.1)]"
+>
   {/* content */}
 </ScrollHint>
 ```
