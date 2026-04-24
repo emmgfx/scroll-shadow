@@ -73,10 +73,7 @@ export default function Page() {
       prop: "lineColor + shadowColor",
       description: "Combine a solid line with a gradient shadow for a stronger indicator.",
       code: (
-        <CodeBlock>{`<ScrollShadow
-  lineColor="oklch(0.6 0.2 270)"
-  shadowColor="oklch(0.6 0.2 270 / 15%)"
->
+        <CodeBlock>{`<ScrollShadow lineColor="rgba(0,0,0,0.1)">
   {/* content */}
 </ScrollShadow>`}</CodeBlock>
       ),

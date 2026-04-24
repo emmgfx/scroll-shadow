@@ -24,7 +24,7 @@ export function VerticalDemo() {
 export function HorizontalDemo() {
   return (
     <ScrollShadow direction="horizontal" style={{ width: "100%", height: "100%" }}>
-      <div className="flex gap-4 p-4" style={{ height: 240 }}>
+      <div className="flex gap-4 p-4 h-55 md:h-60">
         {cols.map((_, i) => (
           <div key={i} className="flex-none flex flex-col overflow-hidden rounded-lg" style={{ width: 140 }}>
             <div
@@ -117,7 +117,7 @@ export function LineDemo() {
 export function LineShadowDemo() {
   return (
     <ModalShell>
-      <ScrollShadow lineColor="var(--color-accent)" shadowColor="color-mix(in srgb, var(--color-accent) 15%, transparent)" style={{ flex: 1, minHeight: 0 }}>
+      <ScrollShadow lineColor="var(--color-border)" style={{ flex: 1, minHeight: 0 }}>
         <div className="px-5 py-3 flex flex-col gap-3 text-left">
           {paragraphs.map((p, i) => <p key={i} className="text-xs text-(--color-body) leading-relaxed">{p}</p>)}
         </div>
