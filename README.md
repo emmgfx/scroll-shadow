@@ -27,6 +27,9 @@ import { ScrollHint } from "@emmgfx/scroll-hint";
 | `shadowSize` | `number` | `20` | Height/width of the shadow overlays in pixels |
 | `lineColor` | `string` | `undefined` | CSS color for a solid line at the edge. Omit to disable |
 | `lineSize` | `number` | `1` | Thickness of the solid line in pixels |
+| `scrollerRef` | `RefObject<HTMLDivElement \| null>` | `undefined` | Ref to the scrolling element, to drive it from outside. Must be a stable object ref: it is used as the internal ref, not copied into it |
+| `scrollerProps` | `HTMLAttributes<HTMLDivElement>` | `undefined` | Props for the scrolling element — `className` for scroll-snap, `tabIndex` and `aria-label` to make it keyboard reachable... `flex`, `minWidth`, `minHeight` and both `overflow` axes are set by the component and cannot be overridden |
+| `onEdgesChange` | `(edges: ScrollHintEdges) => void` | `undefined` | Called on mount and whenever an edge changes, with `{ top, bottom, left, right }`: `true` means there is more content past that edge. Same state that drives the indicators |
 
 All standard `div` props are forwarded to the outer wrapper element.
 
@@ -58,6 +61,34 @@ All standard `div` props are forwarded to the outer wrapper element.
 **Line + shadow combined:**
 ```jsx
 <ScrollHint lineColor="rgba(0,0,0,0.1)">
+  {/* content */}
+</ScrollHint>
+```
+
+**Your own arrows:** the indicators are decoration — they carry `pointer-events: none`. For clickable controls, put your own on top: `onEdgesChange` tells you when to show each one, and `scrollerRef` scrolls.
+
+```jsx
+const scroller = useRef(null);
+const [edges, setEdges] = useState({ left: false, right: false });
+
+const scrollBy = (sign) =>
+  scroller.current?.scrollBy({ left: (sign * scroller.current.clientWidth) / 2, behavior: "smooth" });
+
+<div style={{ position: "relative" }}>
+  <ScrollHint direction="horizontal" scrollerRef={scroller} onEdgesChange={setEdges}>
+    {/* content */}
+  </ScrollHint>
+  {edges.left && <button onClick={() => scrollBy(-1)}>←</button>}
+  {edges.right && <button onClick={() => scrollBy(1)}>→</button>}
+</div>
+```
+
+**Keyboard reachable and snapping:**
+```jsx
+<ScrollHint
+  direction="horizontal"
+  scrollerProps={{ tabIndex: 0, "aria-label": "Photos", className: "snap-x snap-mandatory" }}
+>
   {/* content */}
 </ScrollHint>
 ```
