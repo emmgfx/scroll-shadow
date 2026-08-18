@@ -2,12 +2,22 @@ import { useEffect, useRef, useState } from "react";
 
 export type ScrollHintDirection = "vertical" | "horizontal" | "both";
 
+/** Whether there is more content past each edge — the same state that drives the indicators. */
+export type ScrollHintEdges = { top: boolean; bottom: boolean; left: boolean; right: boolean };
+
 export interface ScrollHintProps extends React.HTMLAttributes<HTMLDivElement> {
   direction?: ScrollHintDirection;
   shadowColor?: string;
   shadowSize?: number;
   lineColor?: string;
   lineSize?: number;
+  /** Ref to the scrolling element, to drive it from outside (scrollBy, scrollTo...). Pass a
+   * stable object ref: it is used as the internal ref, not copied into it. */
+  scrollerRef?: React.RefObject<HTMLDivElement | null>;
+  /** Props for the scrolling element: className for scroll-snap, tabIndex and aria-label to make it keyboard reachable... */
+  scrollerProps?: React.HTMLAttributes<HTMLDivElement>;
+  /** Called on mount and whenever an edge changes, to render your own controls. */
+  onEdgesChange?: (edges: ScrollHintEdges) => void;
 }
 
 export function ScrollHint({
@@ -16,11 +26,16 @@ export function ScrollHint({
   shadowSize = 20,
   lineColor,
   lineSize = 1,
+  scrollerRef,
+  scrollerProps,
+  onEdgesChange,
   children,
   style,
   ...props
 }: ScrollHintProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  // The caller's ref, when given, is the internal one: a single ref, no copying
+  const internalRef = useRef<HTMLDivElement>(null);
+  const containerRef = scrollerRef ?? internalRef;
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const leftRef = useRef<HTMLDivElement>(null);
@@ -58,7 +73,16 @@ export function ScrollHint({
     }
 
     return () => observer.disconnect();
-  }, [direction]);
+  }, [direction, containerRef]);
+
+  // Kept in a ref so an inline callback does not fire this on every render
+  const onEdgesChangeRef = useRef(onEdgesChange);
+  useEffect(() => {
+    onEdgesChangeRef.current = onEdgesChange;
+  });
+  useEffect(() => {
+    onEdgesChangeRef.current?.(shadows);
+  }, [shadows]);
 
   const overlay = (active: boolean, style: React.CSSProperties) => ({
     position: "absolute" as const,
@@ -72,8 +96,12 @@ export function ScrollHint({
   return (
     <div style={{ position: "relative", display: "flex", flexDirection: "column", overflow: "hidden", isolation: "isolate", ...style }} {...props}>
       <div
+        {...scrollerProps}
         ref={containerRef}
         style={{
+          // Last on purpose: these five are what makes the scroller scroll, so
+          // they win over anything scrollerProps brings
+          ...scrollerProps?.style,
           flex: 1,
           minHeight: 0,
           minWidth: 0,
