@@ -86,7 +86,13 @@ export function ScrollHint({
             position: "relative",
             minHeight: "100%",
             minWidth: "100%",
-            ...(horizontal && { display: "inline-block", verticalAlign: "top" }),
+            // width: max-content is what keeps the right sentinel at the end of
+            // the content. Without it, inline-block shrink-to-fit caps this
+            // wrapper at the visible width whenever a block-level child
+            // overflows instead of widening (a grid, a table, a flex row), and
+            // the sentinel sits at the edge of the viewport: the right
+            // indicator would only appear after scrolling a full viewport.
+            ...(horizontal && { display: "inline-block", verticalAlign: "top", width: "max-content" }),
           }}
         >
           {vertical && (
