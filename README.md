@@ -27,6 +27,7 @@ import { ScrollHint } from "@emmgfx/scroll-hint";
 | `shadowSize` | `number` | `20` | Height/width of the shadow overlays in pixels |
 | `lineColor` | `string` | `undefined` | CSS color for a solid line at the edge. Omit to disable |
 | `lineSize` | `number` | `1` | Thickness of the solid line in pixels |
+| `transitionDuration` | `string` | `"0.2s"` | How long the indicators take to fade in and out. Set to `"0s"` for no fade |
 | `scrollerRef` | `RefObject<HTMLDivElement \| null>` | `undefined` | Ref to the scrolling element, to drive it from outside. Must be a stable object ref: it is used as the internal ref, not copied into it |
 | `scrollerProps` | `HTMLAttributes<HTMLDivElement>` | `undefined` | Props for the scrolling element — `className` for scroll-snap, `tabIndex` and `aria-label` to make it keyboard reachable... `flex`, `minWidth`, `minHeight` and both `overflow` axes are set by the component and cannot be overridden |
 | `onEdgesChange` | `(edges: ScrollHintEdges) => void` | `undefined` | Called on mount and whenever an edge changes, with `{ top, bottom, left, right }`: `true` means there is more content past that edge. Same state that drives the indicators |
