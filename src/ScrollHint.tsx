@@ -11,6 +11,8 @@ export interface ScrollHintProps extends React.HTMLAttributes<HTMLDivElement> {
   shadowSize?: number;
   lineColor?: string;
   lineSize?: number;
+  /** How long the indicators take to fade in and out. Set to "0s" for no fade. */
+  transitionDuration?: string;
   /** Ref to the scrolling element, to drive it from outside (scrollBy, scrollTo...). Pass a
    * stable object ref: it is used as the internal ref, not copied into it. */
   scrollerRef?: React.RefObject<HTMLDivElement | null>;
@@ -26,6 +28,7 @@ export function ScrollHint({
   shadowSize = 20,
   lineColor,
   lineSize = 1,
+  transitionDuration = "0.2s",
   scrollerRef,
   scrollerProps,
   onEdgesChange,
@@ -89,7 +92,7 @@ export function ScrollHint({
     pointerEvents: "none" as const,
     zIndex: 1,
     opacity: active ? 1 : 0,
-    transition: "opacity 0.2s",
+    transition: `opacity ${transitionDuration}`,
     ...style,
   });
 
